@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Perlin</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet"> 
+		<script src="libraries/p5.js"></script>
+		<!-- <script src="libraries/p5.sound.js"></script> -->
+		<link rel="stylesheet" href="slider.css">
+		<style>
+			body {
+				font-family: 'Poppins', sans-serif;
+				background-color: black;
+				margin: 0;
+				padding: 0;
+			}
+			canvas {
+				margin: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="control-bar">
+			<div class="slidecontainer">
+				<input type="range" step= "0.1" min="0.1" max="5" value="1" class="slider" oninput="poly(this.value)" id="poly">
+				<p>Polygon</p>
+			</div>
+			<div class="slidecontainer">
+				<input type="range" step= "0.0005" min="0.001" max="0.01" value="0.005" class="slider" oninput="rota(this.value)" id="rota">
+				<p>Speed</p>
+			</div>
+			<div class="slidecontainer">
+				<input type="range" step= "0.001" min="0.001" max="0.03" value="0.01" class="slider" oninput="satur(this.value)" id="satur">
+				<p>Distortion</p>
+			</div>
+			<div class="slidecontainer">
+				<input type="range" step= "10" min="2" max="201" value="19" class="slider" oninput="dens(this.value)" id="dens">
+				<p>Density</p>
+			</div>
+		</div>
+
+		<div class="button" onclick= "randomize()">
+			<img id="randomize"src="assets/dice.png" alt="">
+		</div>
+		
+	</body>
+	<script>
+		let polyValue= document.getElementById("poly").defaultValue
+		let rotationValue= document.getElementById("rota").defaultValue
+		let incrementValue= document.getElementById("satur").defaultValue
+		let densityValue= document.getElementById("dens").defaultValue
+
+		function poly(value){
+			polyValue= value
+			showParams()
+		}
+		function rota(value){
+			rotationValue= value
+			showParams()
+		}
+		function satur(value){
+			incrementValue= value
+			showParams()
+		}
+		function dens(value){
+			densityValue= value
+			showParams()
+		}
+
+		function showParams(){
+			params= {polyValue,rotationValue,incrementValue,densityValue}
+			console.log(params)
+		}
+
+		let polySlider= document.getElementById("poly")
+		let saturSlider= document.getElementById("satur")
+		let densSlider= document.getElementById("dens")
+
+		function randomize(){
+
+			let rPoly= random(parseFloat(polySlider.min), parseFloat(polySlider.max))
+			let sPoly= random(parseFloat(saturSlider.min), parseFloat(saturSlider.max))
+			let dPoly= random(parseFloat(densSlider.min), parseFloat(densSlider.max))
+			
+			polyValue= Math.round(rPoly*10)/10
+			polySlider.value= polyValue
+
+			incrementValue= Math.round(sPoly*1000)/1000
+			saturSlider.value= incrementValue
+
+			densityValue= Math.round(dPoly/10)*10
+			densSlider.value= densityValue
+
+			showParams()
+
+		}
+		
+	</script>
+	<script src="sketch.js"></script>
+</html>
